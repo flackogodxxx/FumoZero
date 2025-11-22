@@ -9,6 +9,11 @@ import CTA from '../components/CTA';
 import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
 import { initScrollTracking } from '../utils/analytics';
+import { 
+  trackPageView, 
+  trackScroll50, 
+  trackTimeOnPage
+} from '../utils/metaPixel';
 
 // Variações de Headline e CTA (para A/B testing)
 const headlines = [
@@ -59,11 +64,35 @@ function LandingPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
     
+    // Meta Pixel - PageView
+    trackPageView('Landing');
+    
+    // Meta Pixel - Time on Page (após 30 segundos)
+    const timeOnPageTimer = setTimeout(() => {
+      trackTimeOnPage('Landing');
+    }, 30000);
+    
+    // Scroll tracking (GA4 e Meta Pixel)
     const timer = setTimeout(() => {
       initScrollTracking();
+      
+      // Meta Pixel - Scroll 50%
+      let scroll50Tracked = false;
+      const handleScroll = () => {
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        if (scrollPercent >= 50 && !scroll50Tracked) {
+          trackScroll50('Landing');
+          scroll50Tracked = true;
+          window.removeEventListener('scroll', handleScroll);
+        }
+      };
+      window.addEventListener('scroll', handleScroll, { passive: true });
     }, 100);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(timeOnPageTimer);
+    };
   }, []);
 
   return (

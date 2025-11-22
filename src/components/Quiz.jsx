@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+import { 
+  trackQuizStart, 
+  trackQuizQuestionAnswered, 
+  trackQuizComplete 
+} from '../utils/metaPixel';
 
 const Quiz = ({ onComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -78,6 +83,9 @@ const Quiz = ({ onComplete }) => {
     };
     setAnswers(newAnswers);
 
+    // Meta Pixel - Rastreia resposta da pergunta
+    trackQuizQuestionAnswered(currentQuestion + 1);
+
     // Avança para próxima pergunta ou mostra resultado
     if (currentQuestion < questions.length - 1) {
       setTimeout(() => {
@@ -135,6 +143,13 @@ const Quiz = ({ onComplete }) => {
       score: avgScore,
     });
     setShowResult(true);
+    
+    // Meta Pixel - Rastreia conclusão do quiz
+    trackQuizComplete({
+      quiz_score: avgScore,
+      result_type: resultType,
+      total_questions: questions.length
+    });
   }, [questions.length]);
 
   const handleContinue = useCallback(() => {
@@ -144,6 +159,13 @@ const Quiz = ({ onComplete }) => {
   }, [onComplete]);
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
+
+  // Meta Pixel - Rastreia início do quiz (apenas na primeira renderização)
+  useEffect(() => {
+    if (currentQuestion === 0 && Object.keys(answers).length === 0) {
+      trackQuizStart();
+    }
+  }, []);
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50/30 relative overflow-hidden flex items-center py-6 sm:py-8 md:py-12">

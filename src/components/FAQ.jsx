@@ -1,9 +1,37 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
+import { trackFAQView } from '../utils/metaPixel';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const sectionRef = useRef(null);
+  const hasTracked = useRef(false);
+
+  // Rastreia visualização da seção FAQ
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasTracked.current) {
+            trackFAQView();
+            hasTracked.current = true;
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   const faqs = [
     {
@@ -45,7 +73,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="section-padding bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
+    <section ref={sectionRef} className="section-padding bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-[0.01]">
         <div className="absolute inset-0" style={{

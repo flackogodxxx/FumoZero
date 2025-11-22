@@ -1,7 +1,37 @@
 import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { Star, CheckCircle2, TrendingUp, Clock, Award, Heart, Zap, Users } from 'lucide-react';
+import { trackSocialProofView } from '../utils/metaPixel';
 
 const SocialValidation = () => {
+  const sectionRef = useRef(null);
+  const hasTracked = useRef(false);
+
+  // Rastreia visualização da seção de prova social
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasTracked.current) {
+            trackSocialProofView();
+            hasTracked.current = true;
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   // Depoimentos Curtos (Impacto Rápido)
   const quickTestimonials = [
     {
@@ -86,7 +116,7 @@ const SocialValidation = () => {
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden">
+    <section ref={sectionRef} className="section-padding bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-[0.015]">
         <div className="absolute inset-0" style={{

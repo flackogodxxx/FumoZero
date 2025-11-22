@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Zap, Brain, Users, Smartphone, BookOpen, Target, ArrowRight } from 'lucide-react';
 import { trackCTAClick } from '../utils/analytics';
+import { trackCTAClick as trackMetaPixelCTA } from '../utils/metaPixel';
 
 const Benefits = ({ onCTAClick }) => {
   const benefits = [
@@ -43,7 +44,10 @@ const Benefits = ({ onCTAClick }) => {
   ];
 
   const handleCTAClick = () => {
+    // Google Analytics
     trackCTAClick('benefits');
+    // Meta Pixel
+    trackMetaPixelCTA('benefits', 'Landing');
     if (onCTAClick) onCTAClick();
   };
 

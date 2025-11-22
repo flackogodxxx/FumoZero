@@ -14,11 +14,20 @@ import {
   Clock
 } from 'lucide-react';
 import { trackCTAClick } from '../utils/analytics';
+import { trackPlanSelection, trackCheckoutStart } from '../utils/metaPixel';
 
 const Pricing = ({ onCTAClick }) => {
   // Função para CTAs dos planos (redireciona para checkout externo)
-  const handlePlanCTAClick = (planName, checkoutUrl) => {
+  const handlePlanCTAClick = (planName, checkoutUrl, planPrice, planId) => {
+    // Google Analytics
     trackCTAClick(`pricing_${planName.toLowerCase().replace(/\s+/g, '_')}`);
+    
+    // Meta Pixel - Rastreia seleção do plano
+    trackPlanSelection(planName, planPrice, planId);
+    
+    // Meta Pixel - Rastreia início do checkout
+    trackCheckoutStart(planName, planPrice, planId);
+    
     // Redireciona para checkout oficial do plano
     window.location.href = checkoutUrl;
     // Ou use: window.open(checkoutUrl, '_blank');
@@ -260,7 +269,11 @@ const Pricing = ({ onCTAClick }) => {
 
                   {/* CTA */}
                   <button
-                    onClick={() => handlePlanCTAClick(plan.name, plan.checkoutUrl)}
+                    onClick={() => {
+                      // Converte preço de string "19,90" para número 19.90
+                      const priceNumber = parseFloat(plan.price.replace(',', '.'));
+                      handlePlanCTAClick(plan.name, plan.checkoutUrl, priceNumber, plan.id.toString());
+                    }}
                     className={`w-full py-3 md:py-4 px-6 rounded-xl md:rounded-2xl font-bold text-sm md:text-base transition-all duration-300 touch-manipulation focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center gap-2 ${
                       isPopular
                         ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 focus:ring-purple-500'

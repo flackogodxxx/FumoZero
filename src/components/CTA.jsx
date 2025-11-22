@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Shield, Zap } from 'lucide-react';
 import { trackCTAClick } from '../utils/analytics';
+import { trackCTAClick as trackMetaPixelCTA } from '../utils/metaPixel';
 
-const CTA = ({ variant = 'primary', ctaText, onCTAClick }) => {
+const CTA = ({ variant = 'primary', ctaText, onCTAClick, pageName = 'Landing' }) => {
   const handleCTAClick = () => {
+    // Google Analytics
     trackCTAClick('cta_section');
+    // Meta Pixel
+    trackMetaPixelCTA('cta_section', pageName);
     if (onCTAClick) onCTAClick();
   };
 

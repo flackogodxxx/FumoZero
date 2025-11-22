@@ -1,11 +1,15 @@
 import { motion } from 'framer-motion';
 import { Sparkles, CheckCircle2, Zap, Shield } from 'lucide-react';
 import { trackCTAClick } from '../utils/analytics';
+import { trackCTAClick as trackMetaPixelCTA } from '../utils/metaPixel';
 import NicoticLogo from '../assets/nicotic-logo.svg';
 
 const Hero = ({ headline, ctaText, onCTAClick }) => {
   const handleCTAClick = () => {
+    // Google Analytics
     trackCTAClick('hero');
+    // Meta Pixel
+    trackMetaPixelCTA('hero', 'Landing');
     if (onCTAClick) onCTAClick();
   };
 

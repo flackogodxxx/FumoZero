@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion';
 import { AlertTriangle, DollarSign, Lock, Heart, Zap } from 'lucide-react';
 import { trackCTAClick } from '../utils/analytics';
+import { trackCTAClick as trackMetaPixelCTA } from '../utils/metaPixel';
 
 const Urgency = ({ onCTAClick }) => {
   const handleCTAClick = () => {
+    // Google Analytics
     trackCTAClick('urgency');
+    // Meta Pixel
+    trackMetaPixelCTA('urgency', 'Landing');
     if (onCTAClick) onCTAClick();
   };
 
