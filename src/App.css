@@ -1,0 +1,8 @@
+/* Estilos específicos do App (se necessário) */
+/* A maioria dos estilos está no Tailwind (index.css) */
+
+.App {
+  min-height: 100vh;
+}
+
+

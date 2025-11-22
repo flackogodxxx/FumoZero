@@ -1,0 +1,184 @@
+{
+  "name": "Fumo Zero Design System",
+  "version": "1.0.0",
+  "description": "Design System para a landing page Fumo Zero",
+  
+  "colors": {
+    "primary": {
+      "50": "#f0fdf4",
+      "100": "#dcfce7",
+      "200": "#bbf7d0",
+      "300": "#86efac",
+      "400": "#4ade80",
+      "500": "#22c55e",
+      "600": "#16a34a",
+      "700": "#15803d",
+      "800": "#166534",
+      "900": "#14532d",
+      "description": "Verde - cor principal, representa saúde e bem-estar"
+    },
+    "accent": {
+      "50": "#fff7ed",
+      "100": "#ffedd5",
+      "200": "#fed7aa",
+      "300": "#fdba74",
+      "400": "#fb923c",
+      "500": "#f97316",
+      "600": "#ea580c",
+      "700": "#c2410c",
+      "800": "#9a3412",
+      "900": "#7c2d12",
+      "description": "Laranja - cor de destaque, cria urgência e atenção"
+    },
+    "dark": {
+      "50": "#f9fafb",
+      "100": "#f3f4f6",
+      "200": "#e5e7eb",
+      "300": "#d1d5db",
+      "400": "#9ca3af",
+      "500": "#6b7280",
+      "600": "#4b5563",
+      "700": "#374151",
+      "800": "#1f2937",
+      "900": "#111827",
+      "description": "Cinza escuro - textos e backgrounds escuros"
+    }
+  },
+  
+  "typography": {
+    "fontFamilies": {
+      "sans": ["Inter", "system-ui", "sans-serif"],
+      "display": ["Poppins", "Inter", "sans-serif"]
+    },
+    "fontSizes": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
+      "6xl": "3.75rem"
+    },
+    "fontWeights": {
+      "normal": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700,
+      "extrabold": 800,
+      "black": 900
+    },
+    "lineHeights": {
+      "tight": 1.25,
+      "normal": 1.5,
+      "relaxed": 1.75
+    }
+  },
+  
+  "spacing": {
+    "scale": "4px base",
+    "values": {
+      "0": "0",
+      "1": "0.25rem",
+      "2": "0.5rem",
+      "3": "0.75rem",
+      "4": "1rem",
+      "5": "1.25rem",
+      "6": "1.5rem",
+      "8": "2rem",
+      "10": "2.5rem",
+      "12": "3rem",
+      "16": "4rem",
+      "20": "5rem",
+      "24": "6rem"
+    }
+  },
+  
+  "components": {
+    "button": {
+      "primary": {
+        "background": "gradient-to-r from-primary-600 to-primary-500",
+        "color": "white",
+        "padding": "py-4 px-8",
+        "borderRadius": "rounded-xl",
+        "fontWeight": "semibold",
+        "fontSize": "text-lg",
+        "shadow": "shadow-lg",
+        "hover": {
+          "shadow": "shadow-xl",
+          "transform": "scale-105"
+        },
+        "transition": "duration-300"
+      },
+      "secondary": {
+        "background": "white",
+        "color": "primary-600",
+        "border": "border-2 border-primary-600",
+        "padding": "py-4 px-8",
+        "borderRadius": "rounded-xl",
+        "fontWeight": "semibold",
+        "fontSize": "text-lg",
+        "hover": {
+          "background": "primary-50",
+          "transform": "scale-105"
+        },
+        "transition": "duration-300"
+      }
+    },
+    "card": {
+      "background": "white",
+      "padding": "p-6",
+      "borderRadius": "rounded-2xl",
+      "shadow": "shadow-lg",
+      "hover": {
+        "shadow": "shadow-xl",
+        "transform": "scale-105"
+      },
+      "transition": "duration-300"
+    },
+    "section": {
+      "padding": {
+        "mobile": "py-16 px-4",
+        "desktop": "md:py-24 px-6 lg:px-8"
+      },
+      "maxWidth": "max-w-7xl mx-auto"
+    }
+  },
+  
+  "animations": {
+    "fadeIn": {
+      "duration": "0.6s",
+      "easing": "ease-in-out"
+    },
+    "slideUp": {
+      "duration": "0.6s",
+      "easing": "ease-out"
+    },
+    "pulse": {
+      "duration": "3s",
+      "easing": "cubic-bezier(0.4, 0, 0.6, 1)",
+      "iteration": "infinite"
+    }
+  },
+  
+  "breakpoints": {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px"
+  },
+  
+  "designPrinciples": {
+    "mobileFirst": true,
+    "highContrast": true,
+    "emotionalCopy": true,
+    "clearHierarchy": true,
+    "fastLoading": true,
+    "conversionFocused": true
+  }
+}
+
+
